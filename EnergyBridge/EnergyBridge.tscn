@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://EnergyBridge.gd" type="Script" id=1]
+[ext_resource path="res://EnergyBridgeMaterial.tres" type="Material" id=2]
+
+[sub_resource type="Animation" id=2]
+resource_name = "PowerDown"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:power")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.33, 0.4, 0.41, 0.62, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "PowerUp"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:power")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[node name="EnergyBridge" type="Spatial"]
+script = ExtResource( 1 )
+mat = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/PowerDown = SubResource( 2 )
+anims/PowerUp = SubResource( 1 )

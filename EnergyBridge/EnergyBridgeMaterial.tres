@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://EnergyBridge.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/color = Color( 1, 0, 0, 1 )
+shader_param/scale = 5.0
+shader_param/wave_scale = 1.0
+shader_param/direction = Vector3( 0, 0, 1 )
+shader_param/power = 1.0
