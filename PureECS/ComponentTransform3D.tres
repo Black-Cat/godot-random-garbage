@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://ComponentTransform3D.gd" type="Script" id=1]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )

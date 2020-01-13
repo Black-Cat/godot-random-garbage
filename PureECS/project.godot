@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Object",
+"class": "System",
+"language": "GDScript",
+"path": "res://System.gd"
+}, {
+"base": "Resource",
+"class": "Transform3D",
+"language": "GDScript",
+"path": "res://ComponentTransform3D.gd"
+} ]
+_global_script_class_icons={
+"System": "",
+"Transform3D": ""
+}
+
+[application]
+
+config/name="PureECS"
+run/main_scene="res://World.tscn"
+config/icon="res://icon.png"
+
+[debug]
+
+gdscript/warnings/enable=false
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

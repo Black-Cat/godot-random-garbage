@@ -1,0 +1,24 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Entity.gd" type="Script" id=1]
+[ext_resource path="res://ComponentTransform3D.tres" type="Resource" id=2]
+[ext_resource path="res://SystemCube.gd" type="Script" id=3]
+[ext_resource path="res://SystemCamera3D.gd" type="Script" id=4]
+[ext_resource path="res://ComponentTransform3D.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="World" type="Node"]
+
+[node name="Cube" type="Node" parent="."]
+script = ExtResource( 1 )
+components = [ SubResource( 1 ) ]
+systems = [ ExtResource( 3 ) ]
+
+[node name="Camera" type="Node" parent="."]
+script = ExtResource( 1 )
+components = [ ExtResource( 2 ) ]
+systems = [ ExtResource( 4 ) ]
