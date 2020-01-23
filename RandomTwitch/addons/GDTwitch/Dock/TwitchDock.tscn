@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/GDTwitch/Dock/TwitchDock.gd" type="Script" id=1]
+[ext_resource path="res://addons/GDTwitch/GDTwitch.gd" type="Script" id=2]
+[ext_resource path="res://addons/GDTwitch/icon.png" type="Texture" id=3]
+
+[node name="TwitchDock" type="PanelContainer"]
+margin_right = 314.0
+margin_bottom = 304.0
+rect_min_size = Vector2( 128, 256 )
+script = ExtResource( 1 )
+
+[node name="GDTwitch" type="Node" parent="."]
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+[node name="V" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 307.0
+margin_bottom = 297.0
+
+[node name="Connect" type="HBoxContainer" parent="V"]
+margin_right = 300.0
+margin_bottom = 24.0
+
+[node name="Channel" type="LineEdit" parent="V/Connect"]
+margin_right = 272.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="ConnectButton" type="Button" parent="V/Connect"]
+margin_left = 276.0
+margin_right = 300.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+toggle_mode = true
+text = "O"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="V"]
+margin_top = 28.0
+margin_right = 300.0
+margin_bottom = 262.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_following = true
+selection_enabled = true
+
+[node name="UserInput" type="LineEdit" parent="V"]
+margin_top = 266.0
+margin_right = 300.0
+margin_bottom = 290.0
+[connection signal="toggled" from="V/Connect/ConnectButton" to="." method="_on_ConnectButton_toggled"]
+[connection signal="text_entered" from="V/UserInput" to="." method="_on_UserInput_text_entered"]
