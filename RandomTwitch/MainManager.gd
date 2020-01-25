@@ -17,8 +17,36 @@ var rolling = false
 var cur_rolling_time = 0.0
 var cur_roll = 0.0
 
+var items = []
+
+func load_config():
+	var file = File.new()
+	var err = file.open("user://ideas.json", file.READ)
+	if err != OK:
+		return
+	var text = file.get_as_text()
+	var messages = parse_json(text)
+	file.close()
+	if messages == null:
+		return
+	for message in messages:
+		add_item(message.user, message.data, message.completed)
+
+func save_config():
+	var file = File.new()
+	file.open("user://ideas.json", file.WRITE)
+	file.store_string(to_json(items))
+	file.close()
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		save_config()
+
 func _ready():
+	load_config()
+
 	roll_button.connect('pressed', self, 'on_roll_button_pressed')
+	data_list.connect('item_rmb_selected', self, 'delete_data_item')
 
 	var secret_file = File.new()
 	secret_file.open(secret_path, File.READ)
@@ -37,17 +65,40 @@ func _ready():
 
 	twitch_client.start()
 
-func on_message_recieved(user, color, message):
-	if not message.begins_with('!do'):
-		return
+func delete_data_item(item, _pos):
+	var data = data_list.get_item_text(item)
+	data_list.remove_item(item)
+	var temp = data.split(':', false, 1)
+	var user = temp[0]
+	var message = temp[1].right(1)
 
-	var data = message.substr(4, message.length() - 4)
+	users[user].remove(message)
+	if users[user].size() < 1:
+		users.erase(user)
+		for item in range(0, user_list.get_item_count()):
+			if user_list.get_item_text(item) == user:
+				user_list.remove_item(item)
+				break
+
+	for item in items:
+		if item.data == message and item.user == user and not item.completed:
+			items.erase(item)
+
+func add_item(user, data, completed):
 	if not users.has(user):
 		users[user] = []
 		user_list.add_item(user)
 
 	users[user].append(data)
 	data_list.add_item(user + ": " + data)
+	items.append({'user':user, 'data':data, 'completed':completed})
+
+func on_message_recieved(user, _color, message):
+	if not message.begins_with('!do'):
+		return
+
+	var data = message.substr(4, message.length() - 4)
+	add_item(user, data, false)
 
 func _process(delta):
 	if not rolling:

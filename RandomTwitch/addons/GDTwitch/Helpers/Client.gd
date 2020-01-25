@@ -114,7 +114,7 @@ func send_command(command):
 	var chuncks_count = command.length() / chunck_size
 	var appendix_length = command.length() % chunck_size
 	
-	log_string("OUT: %s" % command)
+	#log_string("OUT: %s" % command)
 	
 	for i in range(chuncks_count):
 		Stream.put_data((command.substr(i * chunck_size, chunck_size)).to_utf8())
