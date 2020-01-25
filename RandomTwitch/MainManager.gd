@@ -72,7 +72,7 @@ func delete_data_item(item, _pos):
 	var user = temp[0]
 	var message = temp[1].right(1)
 
-	users[user].remove(message)
+	users[user].erase(message)
 	if users[user].size() < 1:
 		users.erase(user)
 		for item in range(0, user_list.get_item_count()):

@@ -1,0 +1,38 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Dead Undead.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=4]
+colors = PoolColorArray( 0.32549, 0, 0, 1, 1, 0.670588, 0.670588, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 0.963636 ), 0.0, 0.854054, 0, 0, Vector2( 1, 0.0431818 ), 0.783472, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+spread = 180.0
+initial_velocity = 10.0
+scale_curve = SubResource( 7 )
+color_ramp = SubResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id=2]
+material = SubResource( 3 )
+
+[node name="Dead Undead" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Particles" type="Particles" parent="."]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 2 )
