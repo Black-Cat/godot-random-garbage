@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Camera.gd" type="Script" id=1]
+[ext_resource path="res://MainUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://main.gd" type="Script" id=3]
+[ext_resource path="res://Land.gd" type="Script" id=4]
+[ext_resource path="res://Floor.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode world_vertex_coords;
+
+uniform vec4 color : hint_color = vec4(1., 0., 0., 1.);
+uniform vec4 grid_color : hint_color = vec4(1., 0., 0., 1.);
+uniform vec4 selected_grid_color : hint_color = vec4(1., 0., 0., 1.);
+uniform vec3 mouse_pos = vec3(0.);
+
+void vertex() {
+	COLOR = vec4(VERTEX, 0.);
+}
+
+void fragment() {
+	float selected = length(floor(COLOR.xz) - floor(mouse_pos.xz));
+	selected = (selected > 0.) ? 0.0 : 1.0;
+
+	vec4 dist = .5 - abs(fract(COLOR) - .5);
+	float grid = smoothstep(.0, .1, dist.x);
+	grid = min(grid, smoothstep(.0, .1, dist.z));
+	vec4 final_grid_color = mix(grid_color, selected_grid_color, selected);
+	ALBEDO = mix(final_grid_color, color, grid).rgb;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/color = Color( 0.858824, 0.996078, 0.745098, 1 )
+shader_param/grid_color = Color( 0.215686, 0.215686, 0.215686, 1 )
+shader_param/selected_grid_color = Color( 0.0235294, 0.129412, 0.988235, 1 )
+shader_param/mouse_pos = Vector2( -2.5, -2.3 )
+
+[sub_resource type="QuadMesh" id=3]
+material = SubResource( 2 )
+size = Vector2( 50, 50 )
+
+[node name="GameManager" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="MainUI" parent="." instance=ExtResource( 2 )]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.691425, 0.19541, -0.695519, 0, 0.962725, 0.270483, 0.722449, -0.187019, 0.665652, -1.42132, 9.31344, 1.36029 )
+far = 179.2
+script = ExtResource( 1 )
+min_world_point = NodePath("../MinWorldPoint")
+max_world_point = NodePath("../MaxWorldPoint")
+land = NodePath("../Land")
+
+[node name="FocalPoint" type="Spatial" parent="Camera"]
+transform = Transform( 0.691425, 1.49012e-08, 0.722448, 0.19541, 0.962725, -0.187019, -0.695519, 0.270483, 0.665652, 1.24176, -12.6243, -15.3879 )
+
+[node name="MinWorldPoint" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, -25, 0, -25 )
+
+[node name="MaxWorldPoint" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 25, 0, 25 )
+
+[node name="Land" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = null
+script = ExtResource( 4 )
+floor_scene = ExtResource( 5 )
