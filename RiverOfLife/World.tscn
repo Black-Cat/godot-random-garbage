@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Kakaha.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GameManager.gd" type="Script" id=2]
+[ext_resource path="res://LifeLemon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Bark.gd" type="Script" id=4]
+[ext_resource path="res://Tree.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 30, 2, 80 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.992157, 0.654902, 0.0784314, 1 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 15, 5, 30 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.00392157, 0.113725, 0.992157, 1 )
+
+[sub_resource type="PlaneMesh" id=7]
+material = SubResource( 8 )
+size = Vector2( 30, 80 )
+subdivide_depth = 50
+
+[node name="World" type="Spatial"]
+script = ExtResource( 2 )
+lemon_scene = ExtResource( 3 )
+
+[node name="Land" type="Spatial" parent="."]
+
+[node name="StaticBody" type="StaticBody" parent="Land"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 0 )
+
+[node name="LeftBark" type="MeshInstance" parent="Land/StaticBody"]
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+script = ExtResource( 4 )
+tree_scene = ExtResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Land/StaticBody"]
+shape = SubResource( 4 )
+
+[node name="River" type="MeshInstance" parent="Land"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.893737, 0 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="StaticBody3" type="StaticBody" parent="Land/River"]
+transform = Transform( 0.0136131, 0, 0.999907, 0, 1, 0, -0.999907, 0, 0.0136131, 0.793204, 0.893737, 31.4455 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Land/River/StaticBody3"]
+shape = SubResource( 4 )
+
+[node name="StaticBody4" type="StaticBody" parent="Land/River"]
+transform = Transform( 0.0136131, 0, 0.999907, 0, 1, 0, -0.999907, 0, 0.0136131, 1.58535, 0.893737, -26.7393 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Land/River/StaticBody4"]
+shape = SubResource( 4 )
+
+[node name="StaticBody2" type="StaticBody" parent="Land"]
+
+[node name="RightBark" type="MeshInstance" parent="Land/StaticBody2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+script = ExtResource( 4 )
+tree_scene = ExtResource( 5 )
+left = false
+
+[node name="CollisionShape2" type="CollisionShape" parent="Land/StaticBody2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 0 )
+shape = SubResource( 4 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.520488, 0.853869, 0, -0.853869, 0.520488, 0, 18.4201, 12.3774 )
+
+[node name="Kakaha" parent="." instance=ExtResource( 1 )]

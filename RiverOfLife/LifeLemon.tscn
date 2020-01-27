@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://LifeLemon.gd" type="Script" id=1]
+
+[sub_resource type="SphereShape" id=7]
+radius = 1.83916
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.25098, 0.25098, 0.25098, 1 )
+
+[sub_resource type="CylinderMesh" id=3]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 4.0
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.321569, 0.156863, 0, 1 )
+
+[sub_resource type="CapsuleMesh" id=5]
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.345098, 0.0980392, 0, 1 )
+
+[node name="LifeLemon" type="RigidBody"]
+mass = 100.0
+gravity_scale = 0.0
+axis_lock_linear_y = true
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 1.49012e-08, 0, 0, 1, -3.72529e-09, 1.49012e-08, 3.72529e-09, 1, 0, 0, 0 )
+shape = SubResource( 7 )
+
+[node name="Stone" type="Spatial" parent="."]
+transform = Transform( 1, 1.49012e-08, 0, 0, 1, -3.72529e-09, 1.49012e-08, 3.72529e-09, 1, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Stone"]
+transform = Transform( 0.2013, 0.226559, -0.952969, -0.979529, 0.0475187, -0.195613, 0.000965864, 0.972838, 0.231487, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Stone"]
+transform = Transform( -0.213237, 0.323656, -0.921833, -0.689004, 0.619134, 0.376758, 0.692678, 0.715486, 0.090978, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="Branch" type="Spatial" parent="."]
+transform = Transform( 1, 1.49012e-08, 0, 0, 1, -3.72529e-09, 1.49012e-08, 3.72529e-09, 1, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Branch"]
+transform = Transform( -0.0299455, -0.999552, 0, 0.999552, -0.0299455, 0, -6.66134e-16, 3.55271e-15, 1, 0, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Branch"]
+transform = Transform( -0.237918, -0.226863, 1.10259e-15, 0.299232, -0.180378, 5.55112e-16, 2.44249e-15, 3.10862e-15, 0.243196, -0.732544, 0.30873, 1.07779e-08 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="EnemyKakaha" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="EnemyKakaha"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.351, 0, -0.598746 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="EnemyKakaha"]
+transform = Transform( -0.320316, 0, 0.383924, 0, 0.5, 0, -0.383924, 0, -0.320316, 0.478144, 0, 0.193409 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="EnemyKakaha"]
+transform = Transform( -0.320316, 0.382649, 0.0312646, 0, 0.0407171, -0.498339, -0.383924, -0.319252, -0.0260847, 0.167, 0.817024, -0.105772 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="EnemyKakaha"]
+transform = Transform( -0.320316, -0.0699513, -0.377497, -7.42342e-08, -0.491631, 0.0911005, -0.383924, 0.058362, 0.314955, -0.524895, 0.171861, 0.428682 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
